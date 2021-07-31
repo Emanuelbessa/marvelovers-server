@@ -18,4 +18,12 @@ export class UserService {
       })
       .first();
   }
+
+  async findOneByEmail(email: string): Promise<User> {
+    return this.modelClass
+      .query()
+      .where('des_email_usr', email)
+      .limit(1)
+      .first();
+  }
 }
