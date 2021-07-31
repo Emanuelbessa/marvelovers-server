@@ -20,6 +20,19 @@ export class UserService {
       .first();
   }
 
+
+  async update(id: string, updateUserDto: UpdateUserDto) {
+    return this.modelClass
+      .query()
+      .patch({
+        des_name_usr: updateUserDto.des_name_usr,
+        des_nickname_usr: updateUserDto.des_nickname_usr,
+        des_email_usr: updateUserDto.des_email_usr,
+      })
+      .where({ cod_user_usr: id })
+      .first();
+  }
+
   async findOneByEmail(email: string): Promise<User> {
     return this.modelClass
       .query()
