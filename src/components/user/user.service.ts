@@ -12,6 +12,7 @@ export class UserService {
       .query()
       .insert({
         des_name_usr: data.des_name_usr,
+        des_nickname_usr: data.des_nickname_usr,
         des_email_usr: data.des_email_usr,
         des_password_usr: data.des_password_usr,
         dat_created_usr: new Date(),

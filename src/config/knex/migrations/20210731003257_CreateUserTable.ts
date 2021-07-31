@@ -9,6 +9,7 @@ export async function up(knex: Knex) {
       .notNullable()
       .defaultTo(knex.raw('UUID()'));
     UserTable.string('des_name_usr').notNullable();
+    UserTable.string('des_nickname_usr').notNullable();
     UserTable.string('des_email_usr', 50).notNullable().unique();
     UserTable.string('des_password_usr', 60).notNullable();
     UserTable.dateTime('dat_created_usr').notNullable();
