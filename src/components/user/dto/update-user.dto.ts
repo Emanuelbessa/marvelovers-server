@@ -5,3 +5,7 @@ export class UpdateUserDto {
   des_email_usr: string;
   des_password_usr: string;
 }
+
+export interface UpdatePassDto extends UpdateUserDto {
+  des_old_pass_usr: string;
+}

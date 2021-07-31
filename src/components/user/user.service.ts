@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { ModelClass } from 'objection';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdatePassDto, UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 
 @Injectable()
@@ -33,6 +34,13 @@ export class UserService {
       .first();
   }
 
+  async updatePassword(id: string, updateUserDto: UpdatePassDto) {
+    return this.modelClass
+      .query()
+      .patch({ des_password_usr: updateUserDto.des_password_usr })
+      .where({ cod_user_usr: id })
+      .first();
+  }
   async findOneByEmail(email: string): Promise<User> {
     return this.modelClass
       .query()

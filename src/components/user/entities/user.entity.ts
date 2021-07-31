@@ -1,4 +1,4 @@
-import { Model, QueryContext } from 'objection';
+import { Model, ModelOptions, QueryContext } from 'objection';
 import * as bcrypt from 'bcryptjs';
 
 export class User extends Model {
@@ -22,5 +22,12 @@ export class User extends Model {
   async $beforeInsert(ctx: QueryContext): Promise<void> {
     await super.$beforeInsert(ctx);
     this.des_password_usr = await bcrypt.hash(this.des_password_usr, 12);
+  }
+
+  async $beforeUpdate(opt: ModelOptions, ctx: QueryContext): Promise<void> {
+    await super.$beforeUpdate(opt, ctx);
+    if (this.des_password_usr) {
+      this.des_password_usr = await bcrypt.hash(this.des_password_usr, 12);
+    }
   }
 }
