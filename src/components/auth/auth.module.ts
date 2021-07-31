@@ -9,6 +9,7 @@ import { EnvModule } from '@config/env/env.module';
 import { EnvService } from '@config/env/env.service';
 import { PassportModule } from '@nestjs/passport';
 import { LocalStrategy } from './strategies/local.strategy';
+import { UserJwtStrategy } from './strategies/jwt-strategy';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { LocalStrategy } from './strategies/local.strategy';
       }),
     }),
   ],
-  providers: [AuthService, UserService, LocalStrategy],
+  providers: [AuthService, UserService, LocalStrategy, UserJwtStrategy],
   controllers: [AuthController],
 })
 export class AuthModule {}
