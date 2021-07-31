@@ -1,0 +1,13 @@
+FROM node:12.16.3-alpine
+
+WORKDIR /usr/app
+
+COPY package*.json ./
+
+RUN npm ci
+
+COPY . .
+
+RUN ENV=${ENV}
+
+CMD ["npm", "run", "start:debug"]
