@@ -12,4 +12,7 @@ export default registerAs('app', () => ({
   jwtExp: process.env.JWT_EXPIRATION,
   angularUrl: process.env.APP_URL,
   env: process.env.NODE_ENV,
+  marvelUrl: process.env.MARVEL_URL,
+  publicApiKey: process.env.MARVEL_PUBLIC_API_KEY,
+  privateApiKey: process.env.MARVEL_PRIVATE_API_KEY,
 }));
