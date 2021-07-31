@@ -48,4 +48,16 @@ export class EnvService {
   get angularUrl(): string {
     return this.configService.get<string>('app.angularUrl');
   }
+
+  get marvelUrl(): string {
+    return this.configService.get<string>('app.marvelUrl');
+  }
+
+  get publicApiKey(): string {
+    return this.configService.get<string>('app.publicApiKey');
+  }
+
+  get privateApiKey(): string {
+    return this.configService.get<string>('app.privateApiKey');
+  }
 }
