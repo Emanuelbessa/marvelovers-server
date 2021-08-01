@@ -6,6 +6,7 @@ import { CharacterDto, Params } from './dto/character.dto';
 import { Character } from './models/character.model';
 import { Md5 } from 'ts-md5';
 import { lastValueFrom } from 'rxjs';
+import { UpdateUserDto } from '../user/dto/update-user.dto';
 
 @Injectable()
 export class CharacterService {
@@ -68,11 +69,11 @@ export class CharacterService {
       .first();
   }
 
-  async favoriteCharacter(data: Character) {
+  async favoriteCharacter(data: Character, user: UpdateUserDto) {
     return this.modelClass
       .query()
       .insert({
-        cod_user_usr: data.cod_user_usr,
+        cod_user_usr: user.cod_user_usr,
         cod_marvelid_cha: data.cod_marvelid_cha,
         des_name_cha: data.des_name_cha,
         des_thumbnail_cha: data.des_thumbnail_cha,
