@@ -1,8 +1,10 @@
 import { Body, Post } from '@nestjs/common';
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
+import User from '@shared/user.decorator';
+import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { CharacterService } from './character.service';
-import { Result } from './dto/character.dto';
+import { Params, Result } from './dto/character.dto';
 import { Character } from './models/character.model';
 
 @Controller('character')
@@ -11,10 +13,14 @@ export class CharacterController {
 
   @UseGuards(UserJwtAuthGuard)
   @Get()
-  findAll(
-    @Query('nameStartsWith') nameStartsWith: string,
-  ): Promise<Partial<Result[]>> {
-    return this.characterService.findAll(nameStartsWith);
+  findAll(@Query() params: Params): Promise<Partial<Result[]>> {
+    return this.characterService.findAll(params);
+  }
+
+  @UseGuards(UserJwtAuthGuard)
+  @Get('favorites')
+  getAllFavorited(@User() user: UpdateUserDto): Promise<Character[]> {
+    return this.characterService.findAllFavorited(user.cod_user_usr);
   }
 
   @UseGuards(UserJwtAuthGuard)

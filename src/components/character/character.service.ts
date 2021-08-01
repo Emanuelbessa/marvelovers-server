@@ -2,7 +2,7 @@ import { EnvService } from '@config/env/env.service';
 import { HttpService } from '@nestjs/axios';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { ModelClass } from 'objection';
-import { CharacterDto } from './dto/character.dto';
+import { CharacterDto, Params } from './dto/character.dto';
 import { Character } from './models/character.model';
 import { Md5 } from 'ts-md5';
 import { lastValueFrom } from 'rxjs';
@@ -15,12 +15,12 @@ export class CharacterService {
     private config: EnvService,
   ) {}
 
-  async findAll(nameStartsWith: string) {
+  async findAll(params: Params) {
     const observable = this.http.get<CharacterDto>(
       `${this.config.marvelUrl}/characters`,
       {
         params: {
-          nameStartsWith: nameStartsWith,
+          ...params,
           ...this.hashApiKey(),
         },
       },
@@ -88,5 +88,12 @@ export class CharacterService {
       .delete()
       .where({ cod_user_usr: cod_user_usr, cod_marvelid_cha: marvelid })
       .first();
+  }
+
+  async findAllFavorited(cod_user_usr: string) {
+    return this.modelClass
+      .query()
+      .select()
+      .where({ cod_user_usr: cod_user_usr });
   }
 }

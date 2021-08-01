@@ -69,3 +69,10 @@ export interface URL {
   type: string;
   url: string;
 }
+
+export interface Params {
+  nameStartsWith: string;
+  offset: number;
+  limit: number;
+  orderBy: string;
+}
