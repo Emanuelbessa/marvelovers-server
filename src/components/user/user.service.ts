@@ -21,7 +21,6 @@ export class UserService {
       .first();
   }
 
-
   async update(id: string, updateUserDto: UpdateUserDto) {
     return this.modelClass
       .query()
@@ -41,6 +40,7 @@ export class UserService {
       .where({ cod_user_usr: id })
       .first();
   }
+
   async findOneByEmail(email: string): Promise<User> {
     return this.modelClass
       .query()
