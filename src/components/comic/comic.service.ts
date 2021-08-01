@@ -59,4 +59,34 @@ export class ComicService {
     );
     return { ts: ts, apikey: this.config.publicApiKey, hash: hash };
   }
+
+  async findComicByCodUserMarvelId(cod_user_usr: string, marvelid: number) {
+    return this.modelClass
+      .query()
+      .where({ cod_user_usr: cod_user_usr, cod_marvelid_com: marvelid })
+      .limit(1)
+      .first();
+  }
+
+  async favoriteComic(data: Comic) {
+    return this.modelClass
+      .query()
+      .insert({
+        cod_user_usr: data.cod_user_usr,
+        cod_marvelid_com: data.cod_marvelid_com,
+        des_name_com: data.des_name_com,
+        des_thumbnail_com: data.des_thumbnail_com,
+        des_description_com: data.des_description_com,
+        dat_created_com: new Date(),
+      })
+      .first();
+  }
+
+  async deleteFavoritedComic(cod_user_usr: string, marvelid: number) {
+    return this.modelClass
+      .query()
+      .delete()
+      .where({ cod_user_usr: cod_user_usr, cod_marvelid_com: marvelid })
+      .first();
+  }
 }
