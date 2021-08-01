@@ -59,4 +59,34 @@ export class CharacterService {
     );
     return { ts: ts, apikey: this.config.publicApiKey, hash: hash };
   }
+
+  async findCharacterByCodUserMarvelId(cod_user_usr: string, marvelid: number) {
+    return this.modelClass
+      .query()
+      .where({ cod_user_usr: cod_user_usr, cod_marvelid_cha: marvelid })
+      .limit(1)
+      .first();
+  }
+
+  async favoriteCharacter(data: Character) {
+    return this.modelClass
+      .query()
+      .insert({
+        cod_user_usr: data.cod_user_usr,
+        cod_marvelid_cha: data.cod_marvelid_cha,
+        des_name_cha: data.des_name_cha,
+        des_thumbnail_cha: data.des_thumbnail_cha,
+        des_description_cha: data.des_description_cha,
+        dat_created_cha: new Date(),
+      })
+      .first();
+  }
+
+  async deleteFavoritedCharacter(cod_user_usr: string, marvelid: number) {
+    return this.modelClass
+      .query()
+      .delete()
+      .where({ cod_user_usr: cod_user_usr, cod_marvelid_cha: marvelid })
+      .first();
+  }
 }
