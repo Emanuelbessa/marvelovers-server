@@ -69,11 +69,11 @@ export class ComicService {
       .first();
   }
 
-  async favoriteComic(data: Comic) {
+  async favoriteComic(data: Comic, user: UpdateUserDto) {
     return this.modelClass
       .query()
       .insert({
-        cod_user_usr: data.cod_user_usr,
+        cod_user_usr: user.cod_user_usr,
         cod_marvelid_com: data.cod_marvelid_com,
         des_name_com: data.des_name_com,
         des_thumbnail_com: data.des_thumbnail_com,

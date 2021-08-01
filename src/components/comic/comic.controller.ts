@@ -38,18 +38,18 @@ export class ComicController {
 
   @UseGuards(UserJwtAuthGuard)
   @Post('favorite')
-  async favoriteCharacter(@Body() data: Comic) {
+  async favoriteCharacter(@User() user: UpdateUserDto, @Body() data: Comic) {
     const character = await this.comicService.findComicByCodUserMarvelId(
-      data.cod_user_usr,
+      user.cod_user_usr,
       data.cod_marvelid_com,
     );
     if (character) {
       return this.comicService.deleteFavoritedComic(
-        data.cod_user_usr,
+        user.cod_user_usr,
         data.cod_marvelid_com,
       );
     } else {
-      return this.comicService.favoriteComic(data);
+      return this.comicService.favoriteComic(data, user);
     }
   }
 }
