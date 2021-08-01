@@ -31,19 +31,22 @@ export class CharacterController {
 
   @UseGuards(UserJwtAuthGuard)
   @Post('favorite')
-  async favoriteCharacter(@Body() data: Character) {
+  async favoriteCharacter(
+  @User() user: UpdateUserDto,
+    @Body() data: Character,
+  ) {
     const character =
       await this.characterService.findCharacterByCodUserMarvelId(
-        data.cod_user_usr,
+        user.cod_user_usr,
         data.cod_marvelid_cha,
       );
     if (character) {
       return this.characterService.deleteFavoritedCharacter(
-        data.cod_user_usr,
+        user.cod_user_usr,
         data.cod_marvelid_cha,
       );
     } else {
-      return this.characterService.favoriteCharacter(data);
+      return this.characterService.favoriteCharacter(data, user);
     }
   }
 }
