@@ -6,8 +6,9 @@ import { EnvService } from '../env/env.service';
 import { EnvModule } from '../env/env.module';
 import { User } from 'src/components/user/entities/user.entity';
 import { Character } from 'src/components/character/models/character.model';
+import { Comic } from 'src/components/comic/models/comic.model';
 
-const models = [User, Character];
+const models = [User, Character, Comic];
 
 const modelProviders = models.map((model) => ({
   provide: model.name,
