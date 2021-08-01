@@ -1,4 +1,4 @@
-import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
 import { ComicService } from './comic.service';
 import { Params, Result } from './dto/comic.dto';
@@ -11,5 +11,11 @@ export class ComicController {
   @Get()
   findAll(@Query() params: Params): Promise<Partial<Result[]>> {
     return this.comicService.findAll(params);
+  }
+
+  @UseGuards(UserJwtAuthGuard)
+  @Get(':marvelid')
+  findOneById(@Param('marvelid') marvelid: number) {
+    return this.comicService.findOneById(marvelid);
   }
 }

@@ -34,6 +34,24 @@ export class ComicService {
     }
   }
 
+  async findOneById(marvelid: number) {
+    const observable = this.http.get<ComicDto>(
+      `${this.config.marvelUrl}/comics/${marvelid}`,
+      {
+        params: {
+          ...this.hashApiKey(),
+        },
+      },
+    );
+
+    try {
+      const response = await lastValueFrom(observable);
+      return response.data;
+    } catch (error) {
+      throw new HttpException(error.response.data.status, 401);
+    }
+  }
+
   private hashApiKey() {
     const ts = Date.now();
     const hash = Md5.hashStr(
