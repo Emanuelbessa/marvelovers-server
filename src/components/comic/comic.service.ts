@@ -4,6 +4,7 @@ import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { ModelClass } from 'objection';
 import { lastValueFrom } from 'rxjs';
 import { Md5 } from 'ts-md5';
+import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { ComicDto, Params } from './dto/comic.dto';
 import { Comic } from './models/comic.model';
 
@@ -88,5 +89,12 @@ export class ComicService {
       .delete()
       .where({ cod_user_usr: cod_user_usr, cod_marvelid_com: marvelid })
       .first();
+  }
+
+  async findAllFavorited(cod_user_usr: string) {
+    return this.modelClass
+      .query()
+      .select()
+      .where({ cod_user_usr: cod_user_usr });
   }
 }

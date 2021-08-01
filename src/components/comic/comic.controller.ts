@@ -8,6 +8,8 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
+import User from '@shared/user.decorator';
+import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { ComicService } from './comic.service';
 import { Params, Result } from './dto/comic.dto';
 import { Comic } from './models/comic.model';
@@ -20,6 +22,12 @@ export class ComicController {
   @Get()
   findAll(@Query() params: Params): Promise<Partial<Result[]>> {
     return this.comicService.findAll(params);
+  }
+
+  @UseGuards(UserJwtAuthGuard)
+  @Get('favorites')
+  getAllFavorited(@User() user: UpdateUserDto): Promise<Comic[]> {
+    return this.comicService.findAllFavorited(user.cod_user_usr);
   }
 
   @UseGuards(UserJwtAuthGuard)
