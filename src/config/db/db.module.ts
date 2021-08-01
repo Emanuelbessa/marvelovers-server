@@ -5,8 +5,9 @@ import { Model } from 'objection';
 import { EnvService } from '../env/env.service';
 import { EnvModule } from '../env/env.module';
 import { User } from 'src/components/user/entities/user.entity';
+import { Character } from 'src/components/character/models/character.model';
 
-const models = [User];
+const models = [User, Character];
 
 const modelProviders = models.map((model) => ({
   provide: model.name,
