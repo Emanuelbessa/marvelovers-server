@@ -28,7 +28,7 @@ export class CharacterService {
 
     try {
       const response = await lastValueFrom(observable);
-      return response.data;
+      return response.data.data.results;
     } catch (error) {
       throw new HttpException(error.response.data.message, 401);
     }

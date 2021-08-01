@@ -1,6 +1,7 @@
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
 import { CharacterService } from './character.service';
+import { Result } from './dto/character.dto';
 
 @Controller('character')
 export class CharacterController {
@@ -8,7 +9,9 @@ export class CharacterController {
 
   @UseGuards(UserJwtAuthGuard)
   @Get()
-  findAll(@Query('nameStartsWith') nameStartsWith: string) {
+  findAll(
+    @Query('nameStartsWith') nameStartsWith: string,
+  ): Promise<Partial<Result[]>> {
     return this.characterService.findAll(nameStartsWith);
   }
 
