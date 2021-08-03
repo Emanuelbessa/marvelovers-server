@@ -14,11 +14,13 @@ export class AuthService {
   async validateUser(email: string, pass: string): Promise<Partial<User>> {
     const user = await this.userService.findOneByEmail(email);
     if (user && (await user.comparePassword(pass))) {
-      const { cod_user_usr, des_name_usr, des_email_usr } = user;
+      const { cod_user_usr, des_name_usr, des_email_usr, des_nickname_usr } =
+        user;
       return {
         cod_user_usr,
         des_name_usr,
         des_email_usr,
+        des_nickname_usr,
       };
     }
     return null;
