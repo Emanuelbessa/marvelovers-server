@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/indent */
 import { Body, Post } from '@nestjs/common';
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
 import User from '@shared/user.decorator';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { CharacterService } from './character.service';
-import { Params, Result } from './dto/character.dto';
+import { Data, Params } from './dto/character.dto';
 import { Character } from './models/character.model';
 
 @Controller('character')
@@ -13,7 +14,7 @@ export class CharacterController {
 
   @UseGuards(UserJwtAuthGuard)
   @Get()
-  findAll(@Query() params: Params): Promise<Partial<Result[]>> {
+  findAll(@Query() params: Params): Promise<Data> {
     return this.characterService.findAll(params);
   }
 
@@ -32,7 +33,7 @@ export class CharacterController {
   @UseGuards(UserJwtAuthGuard)
   @Post('favorite')
   async favoriteCharacter(
-  @User() user: UpdateUserDto,
+    @User() user: UpdateUserDto,
     @Body() data: Character,
   ) {
     const character =
