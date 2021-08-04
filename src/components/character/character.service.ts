@@ -1,6 +1,6 @@
 import { EnvService } from '@config/env/env.service';
 import { HttpService } from '@nestjs/axios';
-import { HttpException, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { ModelClass } from 'objection';
 import { CharacterDto, Params } from './dto/character.dto';
 import { Character } from './models/character.model';
@@ -29,9 +29,12 @@ export class CharacterService {
 
     try {
       const response = await lastValueFrom(observable);
-      return response.data.data.results;
+      return response.data.data;
     } catch (error) {
-      throw new HttpException(error.response.data.message, 401);
+      throw new HttpException(
+        error.response.data.status,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
