@@ -8,6 +8,7 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "postbuild": "npm run start:prod",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "cs:local": "docker-compose --file docker-compose.local.yml --env-file .env.dev up --remove-orphans",
@@ -16,7 +17,7 @@
     "down:remote": "docker-compose --file docker-compose.staging.yml --env-file .env.staging down --rmi local --remove-orphans",
     "start:dev": "nest start --preserveWatchOutput --watch",
     "start:debug": "nest start --preserveWatchOutput --debug 0.0.0.0:9229 --watch",
-    "start:prod": "node dist/main",
+    "start:prod": "node dist/src/main",
     "knex": "NODE_ENV=staging knex --knexfile src/config/knex/knexfile.ts",
     "migrate": "npm run knex migrate:latest",
     "migrate:make": "NODE_ENV=dev npm run knex migrate:make -- -x ts",
