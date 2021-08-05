@@ -33,6 +33,7 @@ const modelProviders = models.map((model) => ({
             user: config.dbUser,
             password: config.dbPass,
             connectTimeout: 60000,
+            timezone: 'America/Bahia',
           },
           debug: config.env !== 'prod',
           pool: { min: 2, max: 10 },

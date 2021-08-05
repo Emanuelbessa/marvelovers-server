@@ -11,7 +11,7 @@ export async function up(knex: Knex) {
     CharacterTable.integer('cod_marvelid_cha').notNullable();
     CharacterTable.string('des_name_cha').notNullable();
     CharacterTable.string('des_thumbnail_cha', 100).notNullable();
-    CharacterTable.string('des_description_cha', 1000).notNullable();
+    CharacterTable.string('des_description_cha', 1000).nullable();
     CharacterTable.dateTime('dat_created_cha').notNullable();
     CharacterTable.primary(['cod_user_usr', 'cod_marvelid_cha']);
   });
