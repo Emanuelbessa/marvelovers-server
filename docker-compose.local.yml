@@ -10,6 +10,8 @@ services:
       - .:/usr/app
       - /usr/app/node_modules
     env_file: .env.dev
+    environment: 
+      - NODE_ENV=dev
     ports:
       - ${PORT}:${PORT}
       - 9222:9229
@@ -17,6 +19,7 @@ services:
       - marvelovers-net
     depends_on:
       - mariadb
+    command: NODE_ENV=dev npm run start:debug
       
   mariadb:
     container_name: db-dev

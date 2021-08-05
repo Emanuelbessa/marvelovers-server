@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  api:
+    container_name: server-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/usr/app
+      - /usr/app/node_modules
+    env_file: .env.staging
+    environment: 
+      - NODE_ENV=staging
+    ports:
+      - ${PORT}:${PORT}
+      - 9222:9229
+    networks:
+      - marvelovers-net
+    command: npm run start:debug
+   
+networks:
+  marvelovers-net:
+volumes:
+  dbdata:
