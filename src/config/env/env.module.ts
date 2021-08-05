@@ -8,7 +8,7 @@ import appConfig from './appConfig';
   imports: [
     ConfigModule.forRoot({
       load: [appConfig],
-      // envFilePath: `.env.${process.env.NODE_ENV}`,
+      envFilePath: `.env.${process.env.NODE_ENV}`,
       isGlobal: true,
     }),
   ],
