@@ -10,7 +10,7 @@
     "build": "nest build",
     "postbuild": "npm run start:prod",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
+    "start": "node dist/src/main",
     "cs:local": "docker-compose --file docker-compose.local.yml --env-file .env.dev up --remove-orphans",
     "down:local": "docker-compose --file docker-compose.local.yml --env-file .env.dev down --rmi local --remove-orphans",
     "cs:remote": "docker-compose --file docker-compose.staging.yml --env-file .env.staging up --remove-orphans",
