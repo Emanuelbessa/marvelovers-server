@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/indent */
 import {
   Controller,
-  Post,
   Body,
   Patch,
   UseGuards,
   BadRequestException,
+  Get,
+  Param,
+  Put,
+  UseFilters,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
 import { UpdatePassDto, UpdateUserDto } from './dto/update-user.dto';
 import User from '@shared/user.decorator';
+import { GeneralErrorsFilter } from '@shared/error-handling.filter';
+import { HttpExceptionFilter } from '@shared/http-exception.filter';
 
+@UseFilters(GeneralErrorsFilter, HttpExceptionFilter)
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
-
   @UseGuards(UserJwtAuthGuard)
-  @Patch()
+  @Put()
   update(@User() user: UpdateUserDto, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(user.cod_user_usr, updateUserDto);
   }
@@ -39,5 +39,11 @@ export class UserController {
       throw new BadRequestException('Unable to update password!');
     }
     await this.userService.updatePassword(user.cod_user_usr, data);
+  }
+
+  @UseGuards(UserJwtAuthGuard)
+  @Get(':userid')
+  findOneById(@Param('userid') userid: string): Promise<UpdateUserDto> {
+    return this.userService.findOneById(userid);
   }
 }

@@ -48,4 +48,8 @@ export class UserService {
       .limit(1)
       .first();
   }
+
+  async findOneById(cod_user_usr: string) {
+    return this.modelClass.query().where({ cod_user_usr }).limit(1).first();
+  }
 }

@@ -5,22 +5,25 @@ import {
   Param,
   Post,
   Query,
+  UseFilters,
   UseGuards,
 } from '@nestjs/common';
+import { GeneralErrorsFilter } from '@shared/error-handling.filter';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
+import { HttpExceptionFilter } from '@shared/http-exception.filter';
 import User from '@shared/user.decorator';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { ComicService } from './comic.service';
-import { Params, Result } from './dto/comic.dto';
+import { Data, Params, Result } from './dto/comic.dto';
 import { Comic } from './models/comic.model';
-
+@UseFilters(GeneralErrorsFilter, HttpExceptionFilter)
 @Controller('comic')
 export class ComicController {
   constructor(private readonly comicService: ComicService) {}
 
   @UseGuards(UserJwtAuthGuard)
   @Get()
-  findAll(@Query() params: Params): Promise<Partial<Result[]>> {
+  findAll(@Query() params: Params): Promise<Data> {
     return this.comicService.findAll(params);
   }
 
@@ -32,7 +35,7 @@ export class ComicController {
 
   @UseGuards(UserJwtAuthGuard)
   @Get(':marvelid')
-  findOneById(@Param('marvelid') marvelid: number) {
+  findOneById(@Param('marvelid') marvelid: number): Promise<Result[]> {
     return this.comicService.findOneById(marvelid);
   }
 
