@@ -11,7 +11,7 @@ export async function up(knex: Knex) {
     ComicTable.integer('cod_marvelid_com').notNullable();
     ComicTable.string('des_name_com').notNullable();
     ComicTable.string('des_thumbnail_com', 100).notNullable();
-    ComicTable.string('des_description_com', 1000).notNullable();
+    ComicTable.string('des_description_com', 1000).nullable();
     ComicTable.dateTime('dat_created_com').notNullable();
     ComicTable.primary(['cod_user_usr', 'cod_marvelid_com']);
   });
