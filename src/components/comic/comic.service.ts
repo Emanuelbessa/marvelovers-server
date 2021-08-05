@@ -1,5 +1,6 @@
 import { EnvService } from '@config/env/env.service';
 import { HttpService } from '@nestjs/axios';
+import { HttpStatus } from '@nestjs/common';
 import { HttpException, Inject, Injectable } from '@nestjs/common';
 import { ModelClass } from 'objection';
 import { lastValueFrom } from 'rxjs';
@@ -29,9 +30,12 @@ export class ComicService {
 
     try {
       const response = await lastValueFrom(observable);
-      return response.data.data.results;
+      return response.data.data;
     } catch (error) {
-      throw new HttpException(error.response.data.status, 401);
+      throw new HttpException(
+        error.response.data.status,
+        HttpStatus.BAD_REQUEST,
+      );
     }
   }
 
@@ -47,7 +51,7 @@ export class ComicService {
 
     try {
       const response = await lastValueFrom(observable);
-      return response.data;
+      return response.data.data.results;
     } catch (error) {
       throw new HttpException(error.response.data.status, 401);
     }

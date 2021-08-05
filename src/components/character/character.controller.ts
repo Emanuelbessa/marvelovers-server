@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/indent */
-import { Body, Post } from '@nestjs/common';
+import { Body, Post, UseFilters } from '@nestjs/common';
 import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { GeneralErrorsFilter } from '@shared/error-handling.filter';
 import { UserJwtAuthGuard } from '@shared/guard/jwt-auth.guard';
+import { HttpExceptionFilter } from '@shared/http-exception.filter';
 import User from '@shared/user.decorator';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
 import { CharacterService } from './character.service';
-import { Data, Params } from './dto/character.dto';
+import { Data, Params, Result } from './dto/character.dto';
 import { Character } from './models/character.model';
 
+@UseFilters(GeneralErrorsFilter, HttpExceptionFilter)
 @Controller('character')
 export class CharacterController {
   constructor(private readonly characterService: CharacterService) {}
@@ -26,7 +29,7 @@ export class CharacterController {
 
   @UseGuards(UserJwtAuthGuard)
   @Get(':marvelid')
-  findOneById(@Param('marvelid') marvelid: number) {
+  findOneById(@Param('marvelid') marvelid: number): Promise<Result[]> {
     return this.characterService.findOneById(marvelid);
   }
 
