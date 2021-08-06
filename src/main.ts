@@ -9,13 +9,7 @@ async function bootstrap() {
 
   const config = app.get(ConfigService);
   app.setGlobalPrefix('api');
-  if (config.get('NODE_ENV') === 'prod') {
-    app.enableCors({
-      origin: [],
-    });
-  } else {
-    app.enableCors({ origin: '*' });
-  }
+  app.enableCors({ origin: '*' });
   app.use(json());
   app.use(urlencoded({ extended: true }));
   await app.listen(config.get('PORT'));

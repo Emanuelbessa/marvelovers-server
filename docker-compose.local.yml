@@ -19,7 +19,7 @@ services:
       - marvelovers-net
     depends_on:
       - mariadb
-    command: NODE_ENV=dev npm run start:debug
+    command: npm run start:debug
       
   mariadb:
     container_name: db-dev
